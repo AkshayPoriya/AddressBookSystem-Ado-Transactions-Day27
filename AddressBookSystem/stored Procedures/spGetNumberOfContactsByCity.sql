@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE spGetNumberOfContactsForCity
+	@city varchar(50)
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION
+			SELECT count(city)
+			FROM contacts
+			WHERE city = @city
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+	END CATCH
+END

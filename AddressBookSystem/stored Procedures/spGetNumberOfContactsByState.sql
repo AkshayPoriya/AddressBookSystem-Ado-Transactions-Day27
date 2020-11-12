@@ -1,0 +1,15 @@
+﻿CREATE PROCEDURE spGetNumberOfContactsForState
+	@state varchar(50)
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION
+			SELECT count(state)
+			FROM contacts
+			WHERE state = @state
+		COMMIT TRANSACTION
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION
+	END CATCH
+END
