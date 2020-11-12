@@ -21,7 +21,7 @@ namespace AddressBookSystem
         public static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Address Book Program!");
-            List<Contact> contactList = DBOperations.GetAllDetails();
+            List<Contact> contactList = DBOperations.RetrieveContactBetweenTwoDates("1/1/2015","1/5/2015");
             Program.DisplayContactDetails(contactList);
         }
 
