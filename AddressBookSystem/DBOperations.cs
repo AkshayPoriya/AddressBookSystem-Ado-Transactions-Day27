@@ -12,8 +12,14 @@ namespace AddressBookSystem
     using System.Data.SqlClient;
     using System.Text;
 
-    class DBOperations
+    public class DBOperations
     {
+        /// <summary>
+        /// UC16
+        /// Gets all details.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
         public static List<Contact> GetAllDetails()
         {
             SqlConnection sqlConnection = DBConnection.GetConnection();
@@ -63,6 +69,81 @@ namespace AddressBookSystem
                         dataReader.Close();
                         return contactList;
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// UC17
+        /// Updates the contact address.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <param name="address">The address.</param>
+        /// <exception cref="System.Exception"></exception>
+        public static void UpdateContactAddress(string firstName, string lastName, string address)
+        {
+            SqlConnection sqlConnection = DBConnection.GetConnection();
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("dbo.spUpdateContactAddress", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@firstName", firstName);
+                    sqlCommand.Parameters.AddWithValue("@lastName", lastName);
+                    sqlCommand.Parameters.AddWithValue("@address", address);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// UC17
+        /// Gets the address.
+        /// </summary>
+        /// <param name="firstName">The first name.</param>
+        /// <param name="lastName">The last name.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public static string GetAddress(string firstName, string lastName)
+        {
+            SqlConnection sqlConnection = DBConnection.GetConnection();
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    string query = @"select address from contacts 
+                                    where first_name=@firstName and last_name = @lastName";
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    sqlCommand.Parameters.AddWithValue("@firstName", firstName);
+                    sqlCommand.Parameters.AddWithValue("@lastName", lastName);
+                    string address = (string)sqlCommand.ExecuteScalar();
+                    return address;
                 }
             }
             catch (Exception ex)
