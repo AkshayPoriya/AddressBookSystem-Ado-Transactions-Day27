@@ -29,6 +29,7 @@ namespace AddressBookSystem
         public string email { get; set; }
         public string contactType { get; set; }
         public string addressBookName { get; set; }
+        public DateTime dateAdded { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Contact"/> class.
@@ -45,6 +46,7 @@ namespace AddressBookSystem
             this.email = "";
             this.contactType = "";
             this.addressBookName = "";
+            this.dateAdded = Convert.ToDateTime("1/1/2000");
         }
     }
 }
