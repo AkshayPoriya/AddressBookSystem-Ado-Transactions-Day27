@@ -232,5 +232,75 @@ namespace AddressBookSystem
                 }
             }
         }
+
+        /// <summary>
+        /// UC19
+        /// Gets the number of contacts for city.
+        /// </summary>
+        /// <param name="city">The city.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public static int GetNumberOfContactsForCity(string city)
+        {
+            SqlConnection sqlConnection = DBConnection.GetConnection();
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("dbo.spGetNumberOfContactsForCity", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@city", city);
+                    int city_count = (int)sqlCommand.ExecuteScalar();
+                    return city_count;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
+
+        /// <summary>
+        /// UC19
+        /// Gets the number of contacts for State.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        /// <returns></returns>
+        /// <exception cref="System.Exception"></exception>
+        public static int GetNumberOfContactsForState(string state)
+        {
+            SqlConnection sqlConnection = DBConnection.GetConnection();
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+                    SqlCommand sqlCommand = new SqlCommand("dbo.spGetNumberOfContactsForState", sqlConnection);
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@state", state);
+                    int state_count = (int)sqlCommand.ExecuteScalar();
+                    return state_count;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
     }
 }
