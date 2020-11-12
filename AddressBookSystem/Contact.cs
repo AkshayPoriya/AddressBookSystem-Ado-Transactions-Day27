@@ -27,6 +27,8 @@ namespace AddressBookSystem
         public string zip { get; set; }
         public string phoneNumber { get; set; }
         public string email { get; set; }
+        public string contactType { get; set; }
+        public string addressBookName { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Contact"/> class.
@@ -41,6 +43,8 @@ namespace AddressBookSystem
             this.zip = "";
             this.phoneNumber = "";
             this.email = "";
+            this.contactType = "";
+            this.addressBookName = "";
         }
     }
 }
